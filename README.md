@@ -1,2 +1,2 @@
-# scheduling-spring-batch-job
-scheduling-spring-batch-job
+# spring-batch-with-scheduler
+spring-batch-with-scheduler

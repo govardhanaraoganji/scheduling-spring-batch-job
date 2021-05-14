@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: spring-boot-test
+  batch:
+    job:
+      enabled: false
