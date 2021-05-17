@@ -10,7 +10,10 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.stream.Stream;
 
 @Configuration
 @EnableScheduling
@@ -36,19 +39,17 @@ public class ImportScheduleConfiguration implements SchedulingConfigurer {
     @Override
     public void configureTasks(final ScheduledTaskRegistrar scheduledTaskRegistrar) {
         scheduledTaskRegistrar.setScheduler(stockImportTaskExecutor());
-        scheduledTaskRegistrar.addCronTask(
+        List<Integer> list = new ArrayList<>();
+        for(int index=0; index < 100; index++){
+            list.add(index+1);
+        }
+        list.stream().forEach( index -> scheduledTaskRegistrar.addCronTask(
                 () -> {
-                    LOGGER.info("Starting import process for index {}", 0);
+                    LOGGER.info("Starting import process for index {}", index);
                     importService.startJob();
-                    LOGGER.info("End of import process for sourceId {}", 0);
+                    LOGGER.info("End of import process for index {}", index);
                 },
-                "0 */2 * * * ?");
-        scheduledTaskRegistrar.addCronTask(
-                () -> {
-                    LOGGER.info("Starting import process for index {}", 1);
-                    importService.startJob();
-                    LOGGER.info("End of import process for sourceId {}", 1);
-                },
-                "0 */2 * * * ?");
+                "0 */2 * * * ?")
+        );
     }
 }

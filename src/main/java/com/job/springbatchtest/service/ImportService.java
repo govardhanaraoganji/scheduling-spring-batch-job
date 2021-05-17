@@ -15,17 +15,17 @@ import java.util.UUID;
 public class ImportService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImportService.class);
 
-    private final JobLauncher jobLauncher;
+    private final JobLauncher hsqlJobLauncher;
     private final Job importJob;
 
-    public ImportService(final JobLauncher jobLauncher, final Job importJob) {
-        this.jobLauncher = jobLauncher;
+    public ImportService(final JobLauncher hsqlJobLauncher, final Job importJob) {
+        this.hsqlJobLauncher = hsqlJobLauncher;
         this.importJob = importJob;
     }
 
     public void startJob() {
         try {
-            jobLauncher.run(importJob, new JobParametersBuilder().addString("uuid", UUID.randomUUID().toString()).toJobParameters());
+            hsqlJobLauncher.run(importJob, new JobParametersBuilder().addString("uuid", UUID.randomUUID().toString()).toJobParameters());
         } catch (JobExecutionException e) {
             LOGGER.error("Execution failed", e);
         }

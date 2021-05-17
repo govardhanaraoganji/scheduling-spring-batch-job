@@ -1,2 +1,2 @@
-# spring-batch-with-scheduler
-spring-batch-with-scheduler
+# scheduling-spring-batch-job
+Scheduling a Spring Batch Job using HSQL DB
